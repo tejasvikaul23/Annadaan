@@ -1,0 +1,123 @@
+[
+  {
+    "_id": "donation_001",
+    "donor_id": "donor_001",
+    "ngo_id": "ngo_001",
+    "event_details": {
+      "event_type": "wedding_reception",
+      "event_date": "2024-10-20",
+      "guest_count": 450
+    },
+    "food_items": [
+      {
+        "item_name": "Biryani",
+        "quantity": 35,
+        "unit": "kg",
+        "category": "main_course",
+        "food_type": "non_veg",
+        "allergens": [],
+        "best_before": "2024-10-20T22:00:00",
+        "prepared_time": "2024-10-20T18:00:00"
+      },
+      {
+        "item_name": "Dal Makhani",
+        "quantity": 25,
+        "unit": "kg",
+        "category": "main_course",
+        "food_type": "veg",
+        "allergens": [
+          "dairy"
+        ],
+        "best_before": "2024-10-20T23:00:00",
+        "prepared_time": "2024-10-20T18:30:00"
+      },
+      {
+        "item_name": "Gulab Jamun",
+        "quantity": 150,
+        "unit": "pieces",
+        "category": "dessert",
+        "food_type": "veg",
+        "allergens": [
+          "dairy",
+          "gluten"
+        ],
+        "best_before": "2024-10-21T12:00:00",
+        "prepared_time": "2024-10-20T17:00:00"
+      },
+      {
+        "item_name": "Pulao Rice",
+        "quantity": 30,
+        "unit": "kg",
+        "category": "main_course",
+        "food_type": "veg",
+        "allergens": [],
+        "best_before": "2024-10-20T22:00:00",
+        "prepared_time": "2024-10-20T18:00:00"
+      }
+    ],
+    "total_plates_estimated": 180,
+    "estimated_value_inr": 18500,
+    "donation_date": "2024-10-20T21:00:00",
+    "pickup_time": "2024-10-20T21:45:00",
+    "status": "completed",
+    "priority": "high",
+    "special_instructions": "Food is fresh and packed hygienically. Please collect within 1 hour.",
+    "storage_condition": "room_temperature",
+    "volunteer_id": "vol_001",
+    "tracking_id": "BLR001234"
+  },
+  {
+    "_id": "donation_002",
+    "donor_id": "donor_002",
+    "ngo_id": "ngo_002",
+    "event_details": {
+      "event_type": "festival_prasadam",
+      "event_date": "2024-10-21",
+      "devotee_count": 850
+    },
+    "food_items": [
+      {
+        "item_name": "Pongal",
+        "quantity": 40,
+        "unit": "kg",
+        "category": "breakfast",
+        "food_type": "veg",
+        "allergens": [],
+        "best_before": "2024-10-21T14:00:00",
+        "prepared_time": "2024-10-21T08:00:00"
+      },
+      {
+        "item_name": "Coconut Chutney",
+        "quantity": 15,
+        "unit": "kg",
+        "category": "side_dish",
+        "food_type": "veg",
+        "allergens": [],
+        "best_before": "2024-10-21T14:00:00",
+        "prepared_time": "2024-10-21T08:30:00"
+      },
+      {
+        "item_name": "Kesari Bath",
+        "quantity": 20,
+        "unit": "kg",
+        "category": "dessert",
+        "food_type": "veg",
+        "allergens": [
+          "gluten"
+        ],
+        "best_before": "2024-10-21T18:00:00",
+        "prepared_time": "2024-10-21T09:00:00"
+      }
+    ],
+    "total_plates_estimated": 200,
+    "estimated_value_inr": 12000,
+    "donation_date": "2024-10-21T11:30:00",
+    "pickup_time": "2024-10-21T12:00:00",
+    "status": "in_transit",
+    "priority": "medium",
+    "special_instructions": "Temple prasadam - strictly vegetarian. Keep covered.",
+    "storage_condition": "room_temperature",
+    "volunteer_id": "vol_002",
+    "tracking_id": "BLR001235"
+  }
+]

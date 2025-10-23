@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>अन्नदान - Food Donation Platform for Indian Events</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-hands-helping"></i>
+                <span>अन्नदान</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <div class="nav-guest" id="nav-guest">
+                    <button class="btn btn--outline" onclick="showLogin()">Login</button>
+                    <button class="btn btn--primary" onclick="showRegister()">Register</button>
+                </div>
+                <div class="nav-user" id="nav-user" style="display: none;">
+                    <span class="nav-username" id="nav-username"></span>
+                    <button class="btn btn--outline" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Landing Page -->
+    <section class="hero" id="landing-section">
+        <div class="hero-content">
+<h1>अन्नदान महादान - The Greatest Gift is Food</h1>
+            <p>Connect event organizers, banquet halls &amp; temples with NGOs to distribute surplus food from Indian weddings, festivals &amp; community events.</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">14,500</div>
+                    <div class="stat-label">Plates Served</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2,850kg</div>
+                    <div class="stat-label">Food Saved</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">₹5,20,000</div>
+                    <div class="stat-label">Value Saved</div>
+                </div>
+            </div>
+            <div class="hero-actions">
+                <button class="btn btn--primary btn--lg" onclick="showRegister()">Start Annadaan</button>
+                <button class="btn btn--secondary btn--lg" onclick="scrollToFeatures()">How It Works</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features-section">
+        <div class="container">
+            <h2>How अन्नदान Works</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-hands"></i></div>
+                    <h3>Event Donors List Food</h3>
+                    <p>Wedding halls, caterers &amp; temples list surplus food from functions with quantity in kg/plates.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-heart"></i></div>
+                    <h3>NGOs Request Food</h3>
+                    <p>Charitable trusts &amp; seva organizations request food based on their capacity &amp; beneficiary needs.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-motorcycle"></i></div>
+                    <h3>Volunteer Delivery</h3>
+                    <p>Community volunteers pickup food from events and deliver to NGOs serving underprivileged people.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
+                    <h3>See Your Impact</h3>
+                    <p>Track plates served, people fed, and food value saved in simple, clear metrics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Modal -->
+    <div class="modal" id="register-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+<h3>Join अन्नदान Platform</h3>
+                <button class="modal-close" onclick="hideModal('register-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="user-type-selector">
+                    <button class="user-type-btn active" data-type="event_donor">Event Organizer/Caterer</button>
+                    <button class="user-type-btn" data-type="ngo">NGO/Charitable Trust</button>
+                    <button class="user-type-btn" data-type="volunteer">Volunteer</button>
+                </div>
+                <form id="register-form">
+                    <div class="form-group">
+                        <label class="form-label">Name *</label>
+                        <input type="text" class="form-control" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email *</label>
+                        <input type="email" class="form-control" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone *</label>
+                        <input type="tel" class="form-control" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password *</label>
+                        <input type="password" class="form-control" name="password" required>
+                    </div>
+                    <div class="form-group event-donor-fields">
+                        <label class="form-label">Event Type</label>
+                        <select class="form-control" name="event_type">
+                            <option value="wedding_hall">Wedding/Banquet Hall</option>
+                            <option value="catering_service">Catering Service</option>
+                            <option value="temple_kitchen">Temple Kitchen</option>
+                            <option value="community_hall">Community Hall</option>
+                            <option value="corporate_events">Corporate Events</option>
+                            <option value="festival_organizer">Festival Organizer</option>
+                        </select>
+                    </div>
+                    <div class="form-group volunteer-fields" style="display: none;">
+                        <label class="form-label">Vehicle Type</label>
+                        <select class="form-control" name="vehicle">
+                            <option value="bike">Bike/Scooter</option>
+                            <option value="car">Car</option>
+                            <option value="auto_rickshaw">Auto Rickshaw</option>
+                            <option value="tempo">Tempo</option>
+                            <option value="van">Van</option>
+                        </select>
+                    </div>
+                    <div class="form-group ngo-fields" style="display: none;">
+                        <label class="form-label">Organization Type</label>
+                        <select class="form-control" name="org_type">
+                            <option value="ngo">NGO</option>
+                            <option value="charitable_trust">Charitable Trust</option>
+                            <option value="seva_organization">Seva Organization</option>
+                            <option value="orphanage">Orphanage</option>
+                            <option value="old_age_home">Old Age Home</option>
+                            <option value="school">School</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full-width">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+<h3>Login to अन्नदान</h3>
+                <button class="modal-close" onclick="hideModal('login-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="login-form">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full-width">Login</button>
+                </form>
+                <div class="demo-accounts">
+                    <p>Demo Accounts:</p>
+                    <button class="btn btn--outline btn--sm" onclick="loginDemo('event_donor')">Event Donor Demo</button>
+                    <button class="btn btn--outline btn--sm" onclick="loginDemo('ngo')">NGO Demo</button>
+                    <button class="btn btn--outline btn--sm" onclick="loginDemo('volunteer')">Volunteer Demo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard" id="dashboard-section" style="display: none;">
+        <div class="dashboard-sidebar">
+            <div class="sidebar-menu" id="sidebar-menu">
+                <!-- Menu items will be populated by JavaScript -->
+            </div>
+        </div>
+        <div class="dashboard-main">
+            <div class="dashboard-header">
+                <h2 id="dashboard-title">Dashboard</h2>
+                <div class="dashboard-actions" id="dashboard-actions">
+                    <!-- Action buttons will be populated by JavaScript -->
+                </div>
+            </div>
+            <div class="dashboard-content" id="dashboard-content">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Donation Creation Modal -->
+    <div class="modal" id="donation-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+<h3>Create अन्नदान (Food Donation)</h3>
+                <button class="modal-close" onclick="hideModal('donation-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="donation-form">
+                    <div class="form-group">
+                        <label class="form-label">Food Item Name * (e.g., Biryani, Dal, Roti)</label>
+                        <input type="text" class="form-control" name="item_name" placeholder="Enter Indian dish name" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Quantity *</label>
+                            <input type="number" class="form-control" name="quantity" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Unit</label>
+                            <select class="form-control" name="unit">
+                                <option value="plates">Plates</option>
+                                <option value="kg">Kilograms (KG)</option>
+                                <option value="liters">Liters</option>
+                                <option value="pieces">Pieces</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Food Category</label>
+                        <select class="form-control" name="category">
+                            <option value="main_course">Main Course (Rice, Dal, Sabzi)</option>
+                            <option value="sweets">Sweets &amp; Desserts</option>
+                            <option value="snacks">Snacks &amp; Starters</option>
+                            <option value="beverages">Beverages</option>
+                            <option value="fruits">Fruits</option>
+                            <option value="breakfast">Breakfast Items</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Expiry Date &amp; Time *</label>
+                        <input type="datetime-local" class="form-control" name="expiry_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Pickup Time *</label>
+                        <input type="datetime-local" class="form-control" name="pickup_time" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Special Instructions</label>
+                        <textarea class="form-control" name="instructions" rows="3" placeholder="e.g., Keep refrigerated, fragile items, etc."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Food Type</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="dietary" value="veg"> Vegetarian (शाकाहारी)</label>
+                            <label><input type="checkbox" name="dietary" value="non_veg"> Non-Vegetarian</label>
+                            <label><input type="checkbox" name="dietary" value="jain"> Jain Food</label>
+                            <label><input type="checkbox" name="dietary" value="halal"> Halal</label>
+                            <label><input type="checkbox" name="dietary" value="swaminarayan"> Swaminarayan</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full-width">Create Donation</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map Modal -->
+    <div class="modal" id="map-modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+<h3>अन्नदान Locations in Your City</h3>
+                <button class="modal-close" onclick="hideModal('map-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="map-container">
+                    <div class="map-placeholder">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>Interactive Map View</p>
+                        <div class="map-legend">
+                            <div class="legend-item">
+                                <span class="legend-marker event-donor"></span>
+                                <span>Event Donors</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-marker ngo"></span>
+                                <span>NGOs &amp; Trusts</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-marker donation"></span>
+                                <span>Active अन्नदान</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

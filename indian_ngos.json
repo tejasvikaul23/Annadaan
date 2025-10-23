@@ -1,0 +1,85 @@
+[
+  {
+    "_id": "ngo_001",
+    "name": "Akshaya Patra Charitable Trust",
+    "type": "ngo",
+    "address": {
+      "street": "Hare Krishna Hill",
+      "area": "Rajajinagar",
+      "city": "Bengaluru",
+      "state": "Karnataka",
+      "pincode": "560010",
+      "coordinates": [
+        77.5568,
+        12.9899
+      ]
+    },
+    "phone": "+91-9876540001",
+    "email": "bangalore@akshayapatra.org",
+    "capacity": "1500 plates/day",
+    "services": [
+      "school_meal_program",
+      "community_kitchen",
+      "disaster_relief"
+    ],
+    "beneficiaries": [
+      "school_children",
+      "underprivileged_families"
+    ],
+    "operating_hours": {
+      "monday": "7:00-20:00",
+      "tuesday": "7:00-20:00",
+      "wednesday": "7:00-20:00",
+      "thursday": "7:00-20:00",
+      "friday": "7:00-20:00",
+      "saturday": "8:00-18:00",
+      "sunday": "8:00-18:00"
+    },
+    "registration_date": "2023-09-05",
+    "verified": true,
+    "total_received": 156,
+    "status": "active"
+  },
+  {
+    "_id": "ngo_002",
+    "name": "Seva Sahayog Foundation",
+    "type": "charity",
+    "address": {
+      "street": "Old Airport Road",
+      "area": "Marathahalli",
+      "city": "Bengaluru",
+      "state": "Karnataka",
+      "pincode": "560037",
+      "coordinates": [
+        77.6977,
+        12.9591
+      ]
+    },
+    "phone": "+91-9876540002",
+    "email": "contact@sevasahayog.org",
+    "capacity": "800 plates/day",
+    "services": [
+      "orphanage_support",
+      "old_age_home",
+      "street_feeding"
+    ],
+    "beneficiaries": [
+      "orphans",
+      "elderly",
+      "homeless"
+    ],
+    "operating_hours": {
+      "monday": "6:00-22:00",
+      "tuesday": "6:00-22:00",
+      "wednesday": "6:00-22:00",
+      "thursday": "6:00-22:00",
+      "friday": "6:00-22:00",
+      "saturday": "6:00-22:00",
+      "sunday": "6:00-22:00"
+    },
+    "registration_date": "2023-08-12",
+    "verified": true,
+    "total_received": 203,
+    "status": "active"
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "_id": "analytics_oct_2024",
+    "month": "October 2024",
+    "total_donations": 89,
+    "total_plates_served": 14500,
+    "total_value_inr": 520000,
+    "food_saved_kg": 2850,
+    "fuel_saved_liters": 450,
+    "people_fed": 14500,
+    "top_donors": [
+      {
+        "donor_id": "donor_001",
+        "name": "Maharaja Palace",
+        "donations": 28,
+        "plates": 4200
+      },
+      {
+        "donor_id": "donor_002",
+        "name": "Annapurna Temple",
+        "donations": 35,
+        "plates": 6500
+      },
+      {
+        "donor_id": "donor_003",
+        "name": "Royal Caterers",
+        "donations": 26,
+        "plates": 3800
+      }
+    ],
+    "top_ngos": [
+      {
+        "ngo_id": "ngo_001",
+        "name": "Akshaya Patra",
+        "received": 48,
+        "plates": 8200
+      },
+      {
+        "ngo_id": "ngo_002",
+        "name": "Seva Sahayog",
+        "received": 41,
+        "plates": 6300
+      }
+    ],
+    "food_categories_kg": {
+      "main_course": 1850,
+      "desserts": 450,
+      "breakfast": 350,
+      "snacks": 200
+    },
+    "event_types": {
+      "weddings": 42,
+      "festivals": 28,
+      "corporate_events": 12,
+      "temple_prasadam": 7
+    }
+  }
+]
