@@ -1577,9 +1577,45 @@ a:hover {
   margin: var(--space-16) 0;
 }
 
-/* Responsive design */
+
+/* Utility classes */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+.mb-0 { margin-bottom: 0; }
+.mt-16 { margin-top: var(--space-16); }
+.mb-16 { margin-bottom: var(--space-16); }
+.hidden { display: none; }
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-8 { gap: var(--space-8); }
+.gap-16 { gap: var(--space-16); }
+
+@font-face {
+  font-family: 'FKGroteskNeue';
+  src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2')
+    format('woff2');
+}/* Responsive design */
 @media (max-width: 768px) {
+  /* Hero Section */
+  .hero > div[style*="display: flex"] {
+    flex-direction: column !important;
+  }
+  
+  .hero .hero-image {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  .hero .hero-image img {
+    max-width: 100%;
+    height: auto;
+  }
+  
   .hero-stats {
+    flex-direction: column;
     gap: var(--space-16);
   }
   
@@ -1593,6 +1629,108 @@ a:hover {
     max-width: 300px;
   }
   
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .hero-buttons .btn {
+    width: 100%;
+  }
+  
+  /* Navigation */
+  .nav-container {
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+  
+  .nav-menu {
+    width: 100%;
+  }
+  
+  .nav-guest,
+  .nav-user {
+    flex-direction: column;
+    width: 100%;
+    gap: var(--space-8);
+  }
+  
+  .nav-guest .btn,
+  .nav-user .btn {
+    width: 100%;
+  }
+  
+  /* Features Section */
+  .features-grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Modal responsiveness */
+  .modal-content {
+    width: 95% !important;
+    max-width: 95% !important;
+    margin: 20px auto !important;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .modal-large {
+    width: 95% !important;
+    max-width: 95% !important;
+  }
+  
+  .modal-header {
+    padding: var(--space-12) !important;
+  }
+  
+  .modal-header h3 {
+    font-size: var(--font-size-lg) !important;
+  }
+  
+  .modal-body {
+    padding: var(--space-12) !important;
+  }
+  
+  /* User type selector buttons */
+  .user-type-selector {
+    flex-direction: column !important;
+    gap: var(--space-8);
+  }
+  
+  .user-type-btn {
+    width: 100% !important;
+  }
+  
+  /* Form rows stack on mobile */
+  .form-row {
+    flex-direction: column !important;
+  }
+  
+  .form-row .form-group {
+    width: 100% !important;
+  }
+  
+  /* Demo accounts buttons */
+  .demo-accounts {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+  
+  .demo-accounts button {
+    width: 100% !important;
+  }
+  
+  /* Checkbox groups */
+  .checkbox-group {
+    flex-direction: column !important;
+  }
+  
+  .checkbox-group label {
+    margin-bottom: var(--space-8);
+  }
+  
+  /* Dashboard */
   .dashboard {
     flex-direction: column;
   }
@@ -1614,32 +1752,79 @@ a:hover {
     white-space: nowrap;
   }
   
-  .form-row {
+  .dashboard-header {
     flex-direction: column;
+    gap: var(--space-12);
+    align-items: flex-start;
   }
   
+  .dashboard-actions {
+    width: 100%;
+  }
+  
+  .dashboard-actions .btn {
+    width: 100%;
+  }
+  
+  /* Stats grid */
   .stats-grid {
     grid-template-columns: 1fr;
   }
+  
+  /* Table - make scrollable on mobile */
+  .table-wrapper {
+    overflow-x: auto;
+  }
+  
+  .table {
+    min-width: 600px;
+  }
+  
+  /* Map container */
+  .map-container {
+    height: 300px;
+  }
+  
+  .map-legend {
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+  
+  /* Chart container */
+  .chart-container {
+    height: 250px;
+  }
 }
 
-/* Utility classes */
-.text-center { text-align: center; }
-.text-left { text-align: left; }
-.text-right { text-align: right; }
-.mb-0 { margin-bottom: 0; }
-.mt-16 { margin-top: var(--space-16); }
-.mb-16 { margin-bottom: var(--space-16); }
-.hidden { display: none; }
-.flex { display: flex; }
-.flex-col { flex-direction: column; }
-.items-center { align-items: center; }
-.justify-between { justify-content: space-between; }
-.gap-8 { gap: var(--space-8); }
-.gap-16 { gap: var(--space-16); }
-
-@font-face {
-  font-family: 'FKGroteskNeue';
-  src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2')
-    format('woff2');
+/* Smaller phones (max 480px) */
+@media (max-width: 480px) {
+  .modal-content {
+    width: 98% !important;
+    margin: 10px auto !important;
+  }
+  
+  .modal-close {
+    font-size: var(--font-size-2xl) !important;
+    padding: var(--space-4) var(--space-8) !important;
+  }
+  
+  .hero h1 {
+    font-size: var(--font-size-2xl) !important;
+  }
+  
+  .stat-item {
+    padding: var(--space-12);
+  }
+  
+  .stat-number {
+    font-size: var(--font-size-xl) !important;
+  }
+  
+  .feature-card {
+    padding: var(--space-16);
+  }
+  
+  .container {
+    padding: var(--space-12);
+  }
 }
