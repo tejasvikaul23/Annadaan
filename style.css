@@ -1129,11 +1129,11 @@ a:hover {
 .hero {
   position: relative;
   min-height: 540px;
-  width: 100%;
+  width: 100vw;
   display: flex;
-  align-items: center;
-  justify-content: center; /* Center horizontally */
-  text-align: center;      /* Center text itself */
+  align-items: center;        /* vertical center */
+  justify-content: center;    /* horizontal center */
+  text-align: center;
   overflow: hidden;
 }
 
@@ -1150,15 +1150,18 @@ a:hover {
 }
 
 .hero-content {
+  /* Center in flex parent */
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 700px;
-  padding: 3rem 2.5rem;
+  max-width: 720px;
+  padding: 3.5rem 2.5rem;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 
 .stat-item {
