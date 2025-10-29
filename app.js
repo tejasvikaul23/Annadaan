@@ -1,209 +1,23 @@
 // Food Waste Management and Redistribution Platform
 // Main Application Logic
 
+// API Configuration
+const API_BASE_URL = 'http://localhost:3000/api';
+
 // Global state management
 let currentUser = null;
 let currentView = 'landing';
 
-// Indian Sample Data Storage
-const sampleData = {
-  eventDonors: [
-    {
-      _id: "donor_001",
-      name: "Maharaja Palace Banquet Hall",
-      email: "contact@maharajapalace.com",
-      password: "demo123",
-      address: {
-        street: "MG Road",
-        area: "Indiranagar",
-        city: "Bengaluru",
-        state: "Karnataka",
-        pincode: "560038",
-        coordinates: [77.6412, 12.9716]
-      },
-      phone: "+91-9876543210",
-      event_type: "wedding_hall",
-      capacity: "500 guests",
-      registration_date: "2024-01-15",
-      verified: true,
-      status: "active",
-      userType: "event_donor"
-    },
-    {
-      _id: "donor_002",
-      name: "Annapurna Temple Kitchen",
-      email: "seva@annapurnatemple.org",
-      password: "demo123",
-      address: {
-        street: "Temple Street",
-        area: "Malleshwaram",
-        city: "Bengaluru",
-        state: "Karnataka",
-        pincode: "560003",
-        coordinates: [77.5707, 13.0067]
-      },
-      phone: "+91-9876543211",
-      event_type: "temple_kitchen",
-      capacity: "1000 devotees/day",
-      registration_date: "2024-02-20",
-      verified: true,
-      status: "active",
-      userType: "event_donor"
-    }
-  ],
-  ngos: [
-    {
-      _id: "ngo_001",
-      name: "Akshaya Patra Charitable Trust",
-      email: "help@akshayapatra.org",
-      password: "demo123",
-      type: "ngo",
-      address: {
-        street: "Hare Krishna Hill",
-        area: "Rajajinagar",
-        city: "Bengaluru",
-        state: "Karnataka",
-        pincode: "560010",
-        coordinates: [77.5568, 12.9899]
-      },
-      phone: "+91-9876540001",
-      capacity: "1500 plates/day",
-      services: ["school_meal_program", "community_kitchen", "disaster_relief"],
-      registration_date: "2023-11-10",
-      verified: true,
-      status: "active",
-      userType: "ngo"
-    },
-    {
-      _id: "ngo_002",
-      name: "Seva Sahayog Foundation",
-      email: "contact@sevasahayog.org",
-      password: "demo123",
-      type: "charitable_trust",
-      address: {
-        street: "Old Airport Road",
-        area: "Marathahalli",
-        city: "Bengaluru",
-        state: "Karnataka",
-        pincode: "560037",
-        coordinates: [77.6977, 12.9591]
-      },
-      phone: "+91-9876540002",
-      capacity: "800 plates/day",
-      services: ["orphanage_support", "old_age_home", "street_feeding"],
-      registration_date: "2023-09-05",
-      verified: true,
-      status: "active",
-      userType: "ngo"
-    }
-  ],
-  volunteers: [
-    {
-      _id: "vol_001",
-      name: "Rajesh Kumar",
-      email: "rajesh.volunteer@gmail.com",
-      password: "demo123",
-      phone: "+91-9988776655",
-      vehicle_type: "bike",
-      capacity: "50 plates",
-      area_coverage: ["Indiranagar", "Koramangala", "HSR Layout"],
-      rating: 4.7,
-      total_deliveries: 89,
-      registration_date: "2023-08-15",
-      status: "active",
-      userType: "volunteer"
-    }
-  ],
-  donations: [
-    {
-      _id: "don_001",
-      event_donor_id: "donor_001",
-      ngo_id: "ngo_001",
-      food_items: [
-        {
-          item_name: "Biryani",
-          quantity: 35,
-          unit: "kg",
-          category: "main_course",
-          dietary_info: ["non_veg"],
-          expiry_date: "2024-12-01T20:00:00Z",
-          preparation_date: "2024-12-01T16:00:00Z"
-        },
-        {
-          item_name: "Dal Makhani",
-          quantity: 25,
-          unit: "kg",
-          category: "main_course",
-          dietary_info: ["veg"],
-          expiry_date: "2024-12-01T20:00:00Z",
-          preparation_date: "2024-12-01T16:00:00Z"
-        }
-      ],
-      total_plates: 180,
-      estimated_value_inr: 18500,
-      donation_date: "2024-12-01T18:30:00Z",
-      pickup_time: "2024-12-01T19:30:00Z",
-      status: "completed",
-      priority: "high",
-      special_instructions: "Keep refrigerated until pickup. Wedding food, very good quality.",
-      delivery_method: "pickup",
-      volunteer_id: "vol_001",
-      tracking_id: "TRK001234"
-    },
-    {
-      _id: "don_002",
-      event_donor_id: "donor_002",
-      ngo_id: "ngo_002",
-      food_items: [
-        {
-          item_name: "Pongal",
-          quantity: 40,
-          unit: "kg",
-          category: "main_course",
-          dietary_info: ["veg"],
-          expiry_date: "2024-12-02T18:00:00Z",
-          preparation_date: "2024-12-02T14:00:00Z"
-        },
-        {
-          item_name: "Kesari Bath",
-          quantity: 20,
-          unit: "kg",
-          category: "sweets",
-          dietary_info: ["veg"],
-          expiry_date: "2024-12-02T18:00:00Z",
-          preparation_date: "2024-12-02T14:00:00Z"
-        }
-      ],
-      total_plates: 200,
-      estimated_value_inr: 12000,
-      donation_date: "2024-12-02T16:30:00Z",
-      pickup_time: "2024-12-02T17:30:00Z",
-      status: "तैयार है",
-      priority: "medium",
-      special_instructions: "Festival prasadam, handle with care",
-      delivery_method: "pickup",
-      volunteer_id: null,
-      tracking_id: "TRK001235"
-    }
-  ]
+// Data caches
+let cachedUsers = {
+  event_donor: [],
+  ngo: [],
+  volunteer: []
 };
+let cachedDonations = [];
+let impactStats = {};
 
-// Impact statistics with clear Indian context
-const impactStats = {
-  total_donations: 89,
-  plates_served: 14500,
-  value_inr: 520000,
-  food_saved_kg: 2850,
-  fuel_saved_liters: 450, // Clear: Petrol/Diesel saved by preventing waste disposal
-  people_fed: 14500,
-  volunteers_involved: 142
-};
-
-// DOM Ready
-document.addEventListener('DOMContentLoaded', function() {
-  initializeApp();
-  setupEventListeners();
-});
+// DOM Ready - initialization handled at the bottom of the file
 
 // Initialize application
 function initializeApp() {
@@ -258,14 +72,14 @@ function showLanding() {
   currentView = 'landing';
 }
 
-function showDashboard() {
+async function showDashboard() {
   document.getElementById('landing-section').style.display = 'none';
   document.getElementById('dashboard-section').style.display = 'flex';
   document.getElementById('nav-guest').style.display = 'none';
   document.getElementById('nav-user').style.display = 'flex';
   document.getElementById('nav-username').textContent = currentUser.name;
   currentView = 'dashboard';
-  renderDashboard();
+  await renderDashboard();
 }
 
 function showRegister() {
@@ -302,95 +116,107 @@ function toggleFormFields(userType) {
 }
 
 // Authentication functions
-function handleRegistration(e) {
+async function handleRegistration(e) {
   e.preventDefault();
   const formData = new FormData(e.target);
   const userType = document.querySelector('.user-type-btn.active').dataset.type;
-  
+
   const userData = {
-    _id: generateId(),
     name: formData.get('name'),
     email: formData.get('email'),
     password: formData.get('password'),
     phone: formData.get('phone'),
     userType: userType,
-    registration_date: new Date().toISOString().split('T')[0],
-    verified: true,
-    status: 'active'
+    event_type: formData.get('event_type'),
+    vehicle: formData.get('vehicle'),
+    org_type: formData.get('org_type')
   };
-  
-  // Add type-specific data
-  if (userType === 'event_donor') {
-    userData.event_type = formData.get('event_type');
-    userData.capacity = '500 guests'; // Default capacity
-    sampleData.eventDonors.push(userData);
-  } else if (userType === 'volunteer') {
-    userData.vehicle_type = formData.get('vehicle');
-    userData.capacity = '50 plates';
-    userData.rating = 5.0;
-    userData.total_deliveries = 0;
-    sampleData.volunteers.push(userData);
-  } else if (userType === 'ngo') {
-    userData.type = formData.get('org_type');
-    userData.capacity = '300 plates/day';
-    userData.services = ['meal_distribution'];
-    sampleData.ngos.push(userData);
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userData)
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      currentUser = result.user;
+      hideModal('register-modal');
+      showDashboard();
+      showNotification(`Registration successful! Welcome to अन्नदान platform. Start your journey of feeding the needy.`, 'success');
+    } else {
+      showNotification(result.error || 'Registration failed', 'error');
+    }
+  } catch (error) {
+    console.error('Registration error:', error);
+    showNotification('Registration failed. Please try again.', 'error');
   }
-  
-  // Auto-login after registration
-  currentUser = userData;
-  hideModal('register-modal');
-  showDashboard();
-  showNotification(`Registration successful! Welcome to अन्नदान platform. Start your journey of feeding the needy.`, 'success');
 }
 
-function handleLogin(e) {
+async function handleLogin(e) {
   e.preventDefault();
   const formData = new FormData(e.target);
   const email = formData.get('email');
   const password = formData.get('password');
-  
-  // Find user in all data sources
-  let user = null;
-  const allUsers = [
-    ...sampleData.eventDonors,
-    ...sampleData.ngos,
-    ...sampleData.volunteers
-  ];
-  
-  user = allUsers.find(u => u.email === email && u.password === password);
-  
-  if (user) {
-    currentUser = user;
-    hideModal('login-modal');
-    showDashboard();
-    showNotification(`Welcome back, ${user.name}! Continue your अन्नदान seva.`, 'success');
-  } else {
-    showNotification('Invalid email or password. Please try the demo accounts below to explore अन्नदान platform.', 'error');
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      currentUser = result.user;
+      hideModal('login-modal');
+      await showDashboard();
+      showNotification(`Welcome back, ${result.user.name}! Continue your अन्नदान seva.`, 'success');
+    } else {
+      showNotification('Invalid email or password. Please try the demo accounts below to explore अन्नदान platform.', 'error');
+    }
+  } catch (error) {
+    console.error('Login error:', error);
+    showNotification('Login failed. Please try again.', 'error');
   }
 }
 
-function loginDemo(userType) {
-  let user = null;
-  
-  if (userType === 'event_donor') {
-    user = sampleData.eventDonors[0];
-  } else if (userType === 'ngo') {
-    user = sampleData.ngos[0];
-  } else if (userType === 'volunteer') {
-    user = sampleData.volunteers[0];
-  }
-  
-  if (user) {
-    currentUser = user;
-    hideModal('login-modal');
-    showDashboard();
-    const typeNames = {
-      event_donor: 'Event Organizer',
-      ngo: 'NGO',
-      volunteer: 'Volunteer'
-    };
-    showNotification(`Demo login successful as ${typeNames[userType]}! Explore the अन्नदान platform.`, 'success');
+async function loginDemo(userType) {
+  const demoCredentials = {
+    event_donor: { email: 'contact@maharajapalace.com', password: 'demo123' },
+    ngo: { email: 'help@akshayapatra.org', password: 'demo123' },
+    volunteer: { email: 'rajesh.volunteer@gmail.com', password: 'demo123' }
+  };
+
+  const credentials = demoCredentials[userType];
+  if (!credentials) return;
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(credentials)
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      currentUser = result.user;
+      hideModal('login-modal');
+      await showDashboard();
+      const typeNames = {
+        event_donor: 'Event Organizer',
+        ngo: 'NGO',
+        volunteer: 'Volunteer'
+      };
+      showNotification(`Demo login successful as ${typeNames[userType]}! Explore the अन्नदान platform.`, 'success');
+    }
+  } catch (error) {
+    console.error('Demo login error:', error);
+    showNotification('Demo login failed. Please try again.', 'error');
   }
 }
 
@@ -400,10 +226,48 @@ function logout() {
   showNotification('Logged out successfully! Thank you for your अन्नदान seva.', 'info');
 }
 
+// API Helper Functions
+async function fetchUsers(userType) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/users/${userType}`);
+    const users = await response.json();
+    cachedUsers[userType] = users;
+    return users;
+  } catch (error) {
+    console.error(`Error fetching ${userType}s:`, error);
+    return [];
+  }
+}
+
+async function fetchDonations(filters = {}) {
+  try {
+    const params = new URLSearchParams(filters);
+    const response = await fetch(`${API_BASE_URL}/donations?${params}`);
+    const donations = await response.json();
+    cachedDonations = donations;
+    return donations;
+  } catch (error) {
+    console.error('Error fetching donations:', error);
+    return [];
+  }
+}
+
+async function fetchStats() {
+  try {
+    const response = await fetch(`${API_BASE_URL}/stats`);
+    const stats = await response.json();
+    impactStats = stats;
+    return stats;
+  } catch (error) {
+    console.error('Error fetching stats:', error);
+    return {};
+  }
+}
+
 // Dashboard rendering
-function renderDashboard() {
+async function renderDashboard() {
   if (!currentUser) return;
-  
+
   const userType = currentUser.userType;
   
   // Update dashboard title
@@ -414,14 +278,15 @@ function renderDashboard() {
   
   // Render dashboard actions
   renderDashboardActions(userType);
-  
-  // Render default content based on user type
+
+  // Fetch necessary data and render default content based on user type
+  await fetchStats();
   if (userType === 'event_donor') {
-    renderEventDonorOverview();
+    await renderEventDonorOverview();
   } else if (userType === 'ngo') {
-    renderNgoOverview();
+    await renderNgoOverview();
   } else if (userType === 'volunteer') {
-    renderVolunteerOverview();
+    await renderVolunteerOverview();
   }
 }
 
@@ -549,9 +414,10 @@ function switchDashboardView(viewId) {
 }
 
 // Event Donor dashboard views
-function renderEventDonorOverview() {
+async function renderEventDonorOverview() {
   const content = document.getElementById('dashboard-content');
-  const donorDonations = sampleData.donations.filter(d => d.event_donor_id === currentUser._id);
+  const donations = await fetchDonations({ event_donor_id: currentUser._id });
+  const donorDonations = donations;
   
   content.innerHTML = `
     <div class="stats-grid">
@@ -599,9 +465,10 @@ function renderEventDonorOverview() {
   setTimeout(() => renderImpactChart(), 100);
 }
 
-function renderEventDonorDonations() {
+async function renderEventDonorDonations() {
   const content = document.getElementById('dashboard-content');
-  const donorDonations = sampleData.donations.filter(d => d.event_donor_id === currentUser._id);
+  const donations = await fetchDonations({ event_donor_id: currentUser._id });
+  const donorDonations = donations;
   
   content.innerHTML = `
     <div class="card">
@@ -617,9 +484,10 @@ function renderEventDonorDonations() {
 }
 
 // NGO dashboard views
-function renderNgoOverview() {
+async function renderNgoOverview() {
   const content = document.getElementById('dashboard-content');
-  const receivedDonations = sampleData.donations.filter(d => d.ngo_id === currentUser._id);
+  const allDonations = await fetchDonations();
+  const receivedDonations = allDonations.filter(d => d.ngo_id === currentUser._id);
   
   content.innerHTML = `
     <div class="stats-grid">
@@ -632,7 +500,7 @@ function renderNgoOverview() {
         <div class="stat-label">Plates Received</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value">${sampleData.donations.filter(d => d.status === 'तैयार है').length}</div>
+        <div class="stat-value">${allDonations.filter(d => d.status === 'तैयार है').length}</div>
         <div class="stat-label">Available अन्नदान</div>
       </div>
       <div class="stat-card">
@@ -652,25 +520,28 @@ function renderNgoOverview() {
   `;
 }
 
-function renderAvailableDonations() {
+async function renderAvailableDonations() {
   const content = document.getElementById('dashboard-content');
-  const availableDonations = sampleData.donations.filter(d => d.status === 'तैयार है' || d.status === 'available');
-  
+  const allDonations = await fetchDonations();
+  const availableDonations = allDonations.filter(d => d.status === 'तैयार है' || d.status === 'available');
+  const tableHTML = await renderAvailableDonationsTable(availableDonations);
+
   content.innerHTML = `
     <div class="card">
       <div class="card-header">
         <h3>Available अन्नदान</h3>
       </div>
       <div class="card-body">
-        ${renderAvailableDonationsTable(availableDonations)}
+        ${tableHTML}
       </div>
     </div>
   `;
 }
 
-function renderReceivedDonations() {
+async function renderReceivedDonations() {
   const content = document.getElementById('dashboard-content');
-  const receivedDonations = sampleData.donations.filter(d => d.ngo_id === currentUser._id);
+  const donations = await fetchDonations({ ngo_id: currentUser._id });
+  const receivedDonations = donations;
   
   content.innerHTML = `
     <div class="card">
@@ -685,9 +556,10 @@ function renderReceivedDonations() {
 }
 
 // Volunteer dashboard views
-function renderVolunteerOverview() {
+async function renderVolunteerOverview() {
   const content = document.getElementById('dashboard-content');
-  const volunteerDeliveries = sampleData.donations.filter(d => d.volunteer_id === currentUser._id);
+  const allDonations = await fetchDonations();
+  const volunteerDeliveries = allDonations.filter(d => d.volunteer_id === currentUser._id);
   
   content.innerHTML = `
     <div class="stats-grid">
@@ -700,7 +572,7 @@ function renderVolunteerOverview() {
         <div class="stat-label">Community Rating</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value">${sampleData.donations.filter(d => !d.volunteer_id && d.status === 'तैयार है').length}</div>
+        <div class="stat-value">${allDonations.filter(d => !d.volunteer_id && d.status === 'तैयार है').length}</div>
         <div class="stat-label">Seva Opportunities</div>
       </div>
       <div class="stat-card">
@@ -720,25 +592,28 @@ function renderVolunteerOverview() {
   `;
 }
 
-function renderAvailablePickups() {
+async function renderAvailablePickups() {
   const content = document.getElementById('dashboard-content');
-  const availablePickups = sampleData.donations.filter(d => !d.volunteer_id && d.status === 'तैयार है');
-  
+  const allDonations = await fetchDonations();
+  const availablePickups = allDonations.filter(d => !d.volunteer_id && d.status === 'तैयार है');
+  const tableHTML = await renderAvailablePickupsTable(availablePickups);
+
   content.innerHTML = `
     <div class="card">
       <div class="card-header">
         <h3>Seva Opportunities - Food Pickup</h3>
       </div>
       <div class="card-body">
-        ${renderAvailablePickupsTable(availablePickups)}
+        ${tableHTML}
       </div>
     </div>
   `;
 }
 
-function renderMyDeliveries() {
+async function renderMyDeliveries() {
   const content = document.getElementById('dashboard-content');
-  const myDeliveries = sampleData.donations.filter(d => d.volunteer_id === currentUser._id);
+  const donations = await fetchDonations({ volunteer_id: currentUser._id });
+  const myDeliveries = donations;
   
   content.innerHTML = `
     <div class="card">
@@ -784,11 +659,16 @@ function renderDonationsTable(donations) {
   `;
 }
 
-function renderAvailableDonationsTable(donations) {
+async function renderAvailableDonationsTable(donations) {
   if (donations.length === 0) {
     return '<p class="text-center">No available donations at the moment.</p>';
   }
-  
+
+  // Fetch event donors if not cached
+  if (cachedUsers.event_donor.length === 0) {
+    await fetchUsers('event_donor');
+  }
+
   return `
     <table class="table">
       <thead>
@@ -803,7 +683,7 @@ function renderAvailableDonationsTable(donations) {
       </thead>
       <tbody>
         ${donations.map(donation => {
-          const eventDonor = sampleData.eventDonors.find(r => r._id === donation.event_donor_id);
+          const eventDonor = cachedUsers.event_donor.find(r => r._id === donation.event_donor_id);
           return `
             <tr>
               <td>${eventDonor ? eventDonor.name : 'Unknown Donor'}</td>
@@ -820,11 +700,19 @@ function renderAvailableDonationsTable(donations) {
   `;
 }
 
-function renderAvailablePickupsTable(pickups) {
+async function renderAvailablePickupsTable(pickups) {
   if (pickups.length === 0) {
     return '<p class="text-center">No available pickups at the moment.</p>';
   }
-  
+
+  // Fetch users if not cached
+  if (cachedUsers.event_donor.length === 0) {
+    await fetchUsers('event_donor');
+  }
+  if (cachedUsers.ngo.length === 0) {
+    await fetchUsers('ngo');
+  }
+
   return `
     <table class="table">
       <thead>
@@ -839,8 +727,8 @@ function renderAvailablePickupsTable(pickups) {
       </thead>
       <tbody>
         ${pickups.map(pickup => {
-          const eventDonor = sampleData.eventDonors.find(r => r._id === pickup.event_donor_id);
-          const ngo = sampleData.ngos.find(f => f._id === pickup.ngo_id);
+          const eventDonor = cachedUsers.event_donor.find(r => r._id === pickup.event_donor_id);
+          const ngo = cachedUsers.ngo.find(f => f._id === pickup.ngo_id);
           return `
             <tr>
               <td>${eventDonor ? eventDonor.name : 'Unknown Donor'}</td>
@@ -1046,83 +934,102 @@ function showCreateDonation() {
   showModal('donation-modal');
 }
 
-function handleDonationCreation(e) {
+async function handleDonationCreation(e) {
   e.preventDefault();
   const formData = new FormData(e.target);
-  
+
   const dietaryInfo = [];
   document.querySelectorAll('input[name="dietary"]:checked').forEach(checkbox => {
     dietaryInfo.push(checkbox.value);
   });
-  
-  const quantity = parseInt(formData.get('quantity'));
-  const unit = formData.get('unit');
-  
-  // Calculate plates based on unit
-  let totalPlates;
-  if (unit === 'plates') {
-    totalPlates = quantity;
-  } else if (unit === 'kg') {
-    totalPlates = Math.round(quantity * 4); // 1kg ≈ 4 plates
-  } else if (unit === 'liters') {
-    totalPlates = Math.round(quantity * 3); // 1L ≈ 3 plates
-  } else {
-    totalPlates = Math.round(quantity / 2); // pieces
-  }
-  
-  const donation = {
-    _id: generateId(),
+
+  const donationData = {
     event_donor_id: currentUser._id,
-    ngo_id: null, // Will be assigned when requested
-    food_items: [{
-      item_name: formData.get('item_name'),
-      quantity: quantity,
-      unit: unit,
-      category: formData.get('category'),
-      dietary_info: dietaryInfo,
-      expiry_date: formData.get('expiry_date'),
-      preparation_date: new Date().toISOString()
-    }],
-    total_plates: totalPlates,
-    estimated_value_inr: totalPlates * 100, // ₹100 per plate estimate
-    donation_date: new Date().toISOString(),
+    item_name: formData.get('item_name'),
+    quantity: parseInt(formData.get('quantity')),
+    unit: formData.get('unit'),
+    category: formData.get('category'),
+    dietary_info: dietaryInfo,
+    expiry_date: formData.get('expiry_date'),
     pickup_time: formData.get('pickup_time'),
-    status: 'तैयार है', // Ready for pickup
-    priority: 'medium',
-    special_instructions: formData.get('instructions') || '',
-    delivery_method: 'pickup',
-    volunteer_id: null,
-    tracking_id: 'ANN' + Math.random().toString(36).substr(2, 6).toUpperCase()
+    special_instructions: formData.get('instructions') || ''
   };
-  
-  sampleData.donations.push(donation);
-  hideModal('donation-modal');
-  document.getElementById('donation-form').reset();
-  showNotification(`अन्नदान created successfully! ${totalPlates} plates worth ₹${totalPlates * 100} can now feed ${totalPlates} people.`, 'success');
-  
-  // Refresh dashboard if on donations view
-  if (currentView === 'dashboard') {
-    renderDashboard();
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/donations`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(donationData)
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      hideModal('donation-modal');
+      document.getElementById('donation-form').reset();
+      const totalPlates = result.donation.total_plates;
+      showNotification(`अन्नदान created successfully! ${totalPlates} plates worth ₹${totalPlates * 100} can now feed ${totalPlates} people.`, 'success');
+
+      // Refresh dashboard if on donations view
+      if (currentView === 'dashboard') {
+        await renderDashboard();
+      }
+    } else {
+      showNotification(result.error || 'Failed to create donation', 'error');
+    }
+  } catch (error) {
+    console.error('Error creating donation:', error);
+    showNotification('Failed to create donation. Please try again.', 'error');
   }
 }
 
-function requestDonation(donationId) {
-  const donation = sampleData.donations.find(d => d._id === donationId);
-  if (donation) {
-    donation.ngo_id = currentUser._id;
-    donation.status = 'रास्ते में'; // Requested/In transit
-    showNotification('अन्नदान requested successfully! Waiting for volunteer pickup.', 'success');
-    renderAvailableDonations();
+async function requestDonation(donationId) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/donations/${donationId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ngo_id: currentUser._id,
+        status: 'रास्ते में'
+      })
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      showNotification('अन्नदान requested successfully! Waiting for volunteer pickup.', 'success');
+      await renderAvailableDonations();
+    } else {
+      showNotification(result.error || 'Failed to request donation', 'error');
+    }
+  } catch (error) {
+    console.error('Error requesting donation:', error);
+    showNotification('Failed to request donation. Please try again.', 'error');
   }
 }
 
-function acceptPickup(donationId) {
-  const donation = sampleData.donations.find(d => d._id === donationId);
-  if (donation) {
-    donation.volunteer_id = currentUser._id;
-    donation.status = 'रास्ते में'; // In transit
-    showNotification('Seva accepted! Food pickup assigned to you. Check your deliveries for details.', 'success');
-    renderAvailablePickups();
+async function acceptPickup(donationId) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/donations/${donationId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        volunteer_id: currentUser._id,
+        status: 'रास्ते में'
+      })
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      showNotification('Seva accepted! Food pickup assigned to you. Check your deliveries for details.', 'success');
+      await renderAvailablePickups();
+    } else {
+      showNotification(result.error || 'Failed to accept pickup', 'error');
+    }
+  } catch (error) {
+    console.error('Error accepting pickup:', error);
+    showNotification('Failed to accept pickup. Please try again.', 'error');
   }
 }
 
@@ -1131,10 +1038,6 @@ function showMap() {
 }
 
 // Utility functions
-function generateId() {
-  return Math.random().toString(36).substr(2, 9);
-}
-
 function formatDateTime(dateString) {
   const date = new Date(dateString);
   return date.toLocaleString();
@@ -1222,7 +1125,11 @@ document.head.appendChild(style);
 
 // Initialize app on load
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initializeApp);
+  document.addEventListener('DOMContentLoaded', function() {
+    initializeApp();
+    setupEventListeners();
+  });
 } else {
   initializeApp();
+  setupEventListeners();
 }
